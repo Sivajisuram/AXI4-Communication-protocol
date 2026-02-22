@@ -28,7 +28,6 @@ reg rst;
 
 always #5 clk = ~clk;
 
-
 // INPUTS
 reg start_write;
 reg start_read;
@@ -59,15 +58,11 @@ axi_top DUT (
     .error(error)
 );
 
-
-// ================= MONITORS =================
-
 // WRITE ADDRESS HANDSHAKE
 always @(posedge clk)
 if(DUT.AWVALID && DUT.AWREADY)
     $display("[%0t] MASTER -> SLAVE : WRITE ADDR = %h LEN=%0d BURST=%b",
               $time, DUT.AWADDR, DUT.AWLEN, DUT.AWBURST);
-
 
 // WRITE DATA HANDSHAKE
 always @(posedge clk)
@@ -96,11 +91,7 @@ if(DUT.RVALID && DUT.RREADY)
     $display("[%0t] SLAVE  -> MASTER: READ DATA  = %h RLAST=%b",
               $time, DUT.RDATA, DUT.RLAST);
 
-
-
-// ================= TEST =================
-initial
-begin
+initial begin
     rst = 1;
     start_write = 0;
     start_read  = 0;
@@ -138,8 +129,6 @@ begin
     
     #20;
   
-    
-
     #100 $stop;
 end
 
