@@ -2,7 +2,7 @@
 
 ## Project Description  
 This project implements AXI4 FULL communication between one master and one slave using Verilog. The design supports burst-based read and write operations with proper handshake between the master and slave. The functionality is verified using simulation.
-![AXI4 protocol](AXI.jpeg)
+![AXI4 protocol](AXI.png)
 
 ## Objective  
 The main objective of this project is to understand the working of the AXI4 FULL protocol and implement a basic communication system for data transfer in System-on-Chip designs.
