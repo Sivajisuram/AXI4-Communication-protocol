@@ -41,7 +41,7 @@ Each channel follows VALID and READY handshaking.
 The simulation verifies correct burst transfer, address generation, and handshake between master and slave.
 
 
-![Graph](axi_wavwforms.jpeg)
+![Graph](axi_waveforms.jpeg)
 
 
 
