@@ -35,6 +35,7 @@ Each channel follows VALID and READY handshaking.
 
 ## Simulation  
 The simulation verifies correct burst transfer, address generation, and handshake between master and slave.
+![simulated Graph](axi_waveforms.jpeg)
 
 ## Conclusion  
 This project demonstrates AXI4 FULL communication between one master and one slave. The design shows correct read and write operations and can be extended for more complex SoC interconnect systems.
