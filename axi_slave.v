@@ -23,18 +23,18 @@
 module axi_slave(
     input clk,
     input rst,
-
+    
     // WRITE ADDRESS CHANNEL
-    input  [31:0] AWADDR,
-    input  [7:0]  AWLEN,
-    input  [2:0]  AWSIZE,
-    input  [1:0]  AWBURST,
-    input         AWVALID,
-    output reg    AWREADY,
+    input  [31:0]AWADDR,
+    input  [7:0]AWLEN,
+    input  [2:0]AWSIZE,
+    input  [1:0]AWBURST,
+    input       AWVALID,
+    output reg  AWREADY,
 
     // WRITE DATA CHANNEL
     input  [31:0] WDATA,
-    input  [3:0]  WSTRB,     // NEW
+    input  [3:0]  WSTRB,    
     input         WVALID,
     input         WLAST,
     output reg    WREADY,
@@ -54,7 +54,7 @@ module axi_slave(
 
     // READ DATA CHANNEL
     output reg [31:0] RDATA,
-    output reg [1:0]  RRESP,   // NEW
+    output reg [1:0]  RRESP,  
     output reg        RVALID,
     output reg        RLAST,
     input             RREADY
@@ -71,33 +71,23 @@ reg write_active;
 reg read_active;
 
 integer i;
-
-always @(posedge clk or posedge rst)
-begin
-    if(rst)
-    begin
+always @(posedge clk or posedge rst)begin
+    if(rst) begin
         AWREADY <= 0;
         WREADY  <= 0;
         BVALID  <= 0;
         BRESP   <= 0;
-
         ARREADY <= 0;
         RVALID  <= 0;
         RLAST   <= 0;
         RRESP   <= 0;
-
         write_active <= 0;
         read_active  <= 0;
-
         for(i=0;i<256;i=i+1)
             mem[i] <= 0;
     end
-    else
-    begin
-
-        //---------------- WRITE ADDRESS ----------------//
-        if(AWVALID && !write_active)
-        begin
+    else begin
+        if(AWVALID && !write_active) begin  //---------------- WRITE ADDRESS ----------------
             AWREADY <= 1;
             wr_addr <= AWADDR;
             wr_count <= 0;
@@ -105,14 +95,9 @@ begin
         end
         else
             AWREADY <= 0;
-
-        //---------------- WRITE DATA ----------------//
-        if(write_active)
-        begin
+        if(write_active)begin    //---------------- WRITE DATA ----------------
             WREADY <= 1;
-
-            if(WVALID && WREADY)
-            begin
+            if(WVALID && WREADY)begin
                 // Byte-wise write using WSTRB
                 if(WSTRB[0]) mem[wr_addr[9:2]][7:0]   <= WDATA[7:0];
                 if(WSTRB[1]) mem[wr_addr[9:2]][15:8]  <= WDATA[15:8];
@@ -122,8 +107,7 @@ begin
                 wr_addr <= wr_addr + 4;
                 wr_count <= wr_count + 1;
 
-                if(WLAST)
-                begin
+                if(WLAST)begin
                     WREADY <= 0;
                     BVALID <= 1;
                     BRESP  <= 2'b00; // OKAY
@@ -132,11 +116,11 @@ begin
             end
         end
 
-        //---------------- WRITE RESPONSE ----------------//
+        //---------------- WRITE RESPONSE ----------------
         if(BVALID && BREADY)
             BVALID <= 0;
 
-        //---------------- READ ADDRESS ----------------//
+        //---------------- READ ADDRESS ----------------
         if(ARVALID && !read_active)
         begin
             ARREADY <= 1;
@@ -147,7 +131,8 @@ begin
         else
             ARREADY <= 0;
 
-        //---------------- READ DATA ----------------//
+        //---------------- READ DATA ----------------
+        
         if(read_active)
         begin
             if(!RVALID)
