@@ -1,0 +1,57 @@
+xrun(64): 22.09-s003: (c) Copyright 1995-2022 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	22.09-s003: Started on Mar 11, 2026 at 16:30:57 IST
+xrun
+	-gui
+	-access +rwc
+	tb_axi_top.v
+	axi_master.v
+	axi_slave.v
+	axi_top.v
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Top level design units:
+		tb_axi_top
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.axi_slave:v <0x1ddcf4fa>
+			streams:  21, words: 11231
+		worklib.axi_master:v <0x7ef9d150>
+			streams:  20, words: 11147
+		worklib.tb_axi_top:v <0x67ffb829>
+			streams:  19, words: 15293
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		              Instances  Unique
+		Modules:              4       4
+		Registers:           48      48
+		Scalar wires:        18       -
+		Vectored wires:      19       -
+		Always blocks:        8       8
+		Initial blocks:       2       2
+		Pseudo assignments:  10      10
+	Writing initial simulation snapshot: worklib.tb_axi_top:v
+xmsim: *W,NOMTDGUI: Multi-Threaded Dumping is disabled for interactive debug mode.
+
+-------------------------------------
+Relinquished control to SimVision...
+xcelium> 
+xcelium> source /home/install/XCELIUM2209/tools/xcelium/files/xmsimrc
+xcelium> database -open waves -into waves.shm -default
+Created default SHM database waves
+xcelium> probe -create -shm tb_axi_top.base_read_addr tb_axi_top.base_write_addr tb_axi_top.burst_len tb_axi_top.burst_size tb_axi_top.burst_type tb_axi_top.clk tb_axi_top.done tb_axi_top.error tb_axi_top.rst tb_axi_top.start_read tb_axi_top.start_write tb_axi_top.write_data
+Created probe 1
+xcelium> run
+[45] MASTER -> SLAVE : WRITE ADDR = 00000020 LEN=3 BURST=01
+[55] MASTER -> SLAVE : WRITE DATA = a0000000 WLAST=0
+[65] MASTER -> SLAVE : WRITE DATA = a0000001 WLAST=0
+[75] MASTER -> SLAVE : WRITE DATA = a0000002 WLAST=0
+[85] MASTER -> SLAVE : WRITE DATA = a0000003 WLAST=1
+[95] SLAVE  -> MASTER: WRITE RESP = 00
+[135] MASTER -> SLAVE : READ ADDR  = 00000020 LEN=3 BURST=01
+[145] SLAVE  -> MASTER: READ DATA  = a0000000 RLAST=0
+[165] SLAVE  -> MASTER: READ DATA  = a0000001 RLAST=0
+[185] SLAVE  -> MASTER: READ DATA  = a0000002 RLAST=0
+[205] SLAVE  -> MASTER: READ DATA  = a0000003 RLAST=1
+Simulation stopped via $stop(1) at time 325 NS + 0
+xcelium> 
